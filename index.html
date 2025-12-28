@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpha Wave Digital | Next-Gen Analytics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Myanmar:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --font-my: 'Noto Sans Myanmar', sans-serif;
+            --font-en: 'Plus Jakarta Sans', sans-serif;
+            --brand-bg: #030712;
+            --brand-surface: #0a0f1e;
+            --brand-gold: #d4af37;
+            --brand-amber: #f59e0b;
+            --circuit-color: rgba(212, 175, 55, 0.08);
+        }
+
+        body { 
+            font-family: var(--font-en);
+            background-color: var(--brand-bg);
+            color: #f8fafc;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Galactic Background Animation */
+        .galaxy-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(99, 102, 241, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, #030712 0%, #000 100%);
+            z-index: -2;
+        }
+
+        .stars-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(white, rgba(255,255,255,0.2) 2px, transparent 40px);
+            background-size: 550px 550px;
+            opacity: 0.1;
+            z-index: -1;
+            animation: starsShift 100s linear infinite;
+        }
+
+        @keyframes starsShift {
+            from { background-position: 0 0; }
+            to { background-position: 1000px 1000px; }
+        }
+
+        /* Circuit Board Pattern */
+        .circuit-lines {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(var(--circuit-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--circuit-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Glassmorphism & Neon Glow */
+        .glass-panel {
+            background: rgba(10, 15, 30, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .glass-panel:hover {
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.05), 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .gold-glow-text {
+            color: #fff;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .gradient-border-gold {
+            position: relative;
+            background: var(--brand-surface);
+            border-radius: 2rem;
+            z-index: 1;
+        }
+
+        .gradient-border-gold::before {
+            content: "";
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(135deg, #d4af37, transparent, #f59e0b);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0.2;
+            transition: opacity 0.3s;
+        }
+
+        .gradient-border-gold:hover::before {
+            opacity: 0.5;
+        }
+
+        /* Scroll Animations Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom scrollbar for premium feel */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(to bottom, transparent, var(--brand-gold), transparent);
+            border-radius: 10px;
+        }
+
+        .mm-font { font-family: var(--font-my); line-height: 1.8; }
+        .en-font { font-family: var(--font-en); }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
+    "recharts": "https://esm.sh/recharts@^3.6.0"
+  }
+}
+</script>
+</head>
+<body>
+    <div class="galaxy-bg"></div>
+    <div class="stars-overlay"></div>
+    <div class="circuit-lines"></div>
+    <div id="root"></div>
+
+    <script>
+        // Reveal on Scroll Logic
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Initial check
+        window.addEventListener("load", reveal);
+    </script>
+</body>
+</html>
